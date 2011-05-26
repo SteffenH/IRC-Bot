@@ -2,8 +2,9 @@ import sys
 import socket
 import string
 from os.path import isfile
-from mail import sendEmail
-from db import *
+from MAIL import *
+#from DB import *
+from PLUGIN import *
 
 if __name__ == "__main__":
 
@@ -34,11 +35,13 @@ if __name__ == "__main__":
 	# username
 	# password
 	
+	DB = use_plugin("SQLITE")
+	
 	## DB
 	#
 	DATABASE = "example.db"
 	if not isfile(DATABASE):
-		createTable(DATABASE)
+		DB.createTable(DATABASE)
 	
 	#connecting to server and sending appropriate orders 
 	#registering the nick and joining a channel
@@ -68,14 +71,14 @@ if __name__ == "__main__":
 			# username-format: 
 			# :NICK!~IDENT@NETWORK
 			
-			if ((line[1] == "PART") | (line[1] == "JOIN")):
-				addEntry(DATABASE, line[1], line[0].split("!")[0][1:], line[2])
+			elif ((line[1] == "PART") | (line[1] == "JOIN")):
+				DB.addEntry(DATABASE, line[1], line[0].split("!")[0][1:], line[2])
 				print line
 
 				
 			#received private message
 			elif ((line[1] == "PRIVMSG") & (line[2] == NICK)):
-				addEntry(DATABASE, line[1], line[0].split("!")[0][1:], " ".join(line[3:]))
+				DB.addEntry(DATABASE, line[1], line[0].split("!")[0][1:], " ".join(line[3:]))
 				print line
 				
 				#
@@ -93,7 +96,8 @@ if __name__ == "__main__":
 				# tells when persons where last seen in chatroom
 				elif (line[3][1:] == "SEEN"):
 					for person in line[4:]:
-						irc.send("PRIVMSG %s :%s was last seen %s\r\n" % (line[0].split("!")[0][1:], person, lastSeen(DATABASE, person)))
+						seen = DB.lastSeen(DATABASE, person)
+						irc.send("PRIVMSG %s :%s was last seen %s\r\n" % (line[0].split("!")[0][1:], person, seen))
 			
 				elif (line[3][1:] == "QUIT"):
 					if len(line) > 4:
