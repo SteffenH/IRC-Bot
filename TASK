@@ -1,0 +1,51 @@
+Die Abgabe umfasst den compillierfähigen Quellcode der Anwendung, ein Build-Script (Makefile) und zusätzl. Dateien "README", "LICENSE" und ggf. "INSTALL" etc. Stellen Sie den Code unter eine Open Source Lizenz Ihrer Wahl.
+
+Das Projekt muss als GIT Repository abgegeben werden. Bitte exportieren Sie dazu alle Entwicklungsbranches, die erstellt werden sollten und packen dieses in eine bzip2, oder ähnliche Datei. Dieses wird dann unter Angabe des Projekttitles und Namens in der Betreffzeile als EMail versandt.
+
+Arbeiten, die ohne GIT Repository und ohne sämtliche lokalen Commits abgegeben werden sind nicht wertbar. Jede größere Änderung muss im Repository nachvollziehbar sein.
+
+Aufgabe 1:  IRC Bot
+
+	Zu erstellen ist ein IRC Bot in einer der folgenden Programmiersprachen:
+	C, C++, ObjC, Vala, Python, Perl. Das erstellte Programm kann vorhandene IRC Bibliotheken 
+	nutzen, muss dies aber nicht. D.h. die notwendigen Teile der IRC RFC können 
+	eigenständig programmiert werden. Es wird die Nutzung einer vorhandenen 
+	Bibliothek empfohlen.
+	
+	Beim Aufruf von "progname -h" oder/und"progname --help" wird eine kurze Anleitung mit sämtlichen möglichen Parametern auf dem Bildschirm ausgegeben. 
+    Orientieren Sie sich dazu an anderen Linux Programmen. Eine kurze Manpage beschreibt das Programm ebenfalls. Sowohl Programm, als auch Manpage #
+    werden vom Build Tool erstellt. 
+	
+	Optional kann der IRC Bot eine Konfigurationsdatei nutzen, die Angabe aller 
+	notwendigen Paramter zum Start des Programms über die Konsole ist aber Pflicht.
+	
+	Per Default startet das Programm als sog. Daemon im Hintergrund. Mit dem 
+	Schalter -D sollte dieses Verhalten deaktiviert werden.
+	
+	Der IRC Bot solle folgenden Ereignisse im IRC loggen können:
+	
+	- An- und Abmelden einer Person im Chatroom (Zeit)
+	- Erstellen eines IRC Logs
+	
+	Der IRC Client sollte direkt "ansprechbar" sein. D.h. über eine geeignte
+	Formulierungssprache sollte folgendes Möglich sein:
+	
+	- Abfrage wann ein IRC Nutzer das letzte Mal im Chatroom war
+	- Verschicken des IRC Logs an eine Mailadresse
+	- Weitere "Intelligenz" ist optional ;-)
+	
+	Das IRC Log, bzw. alle weiteren Logging Mechanismen werden in eine SQLite 
+	Datenbank geloggt. Die Anbindung an die Logging-Funktionalität wird über 
+	einen Plugin-Mechanismus geregelt, so dass das Programm später auch über andere
+	Mechanismen loggen könnte, z.B. Textdateien etc.
+	
+	Vorbereitend werden in der Vorlesung dafür nochmals folgende Dinge angesprochen:
+	
+	- Vorstellung einer IRC Bibliothek
+	- GNU Getopt
+	- Der Code der notwendig ist, um ein Programm als Daemon laufen zu lassen
+	- Das Erstellen von Manpages
+	- Wiederholung von dlopen() für den Plugin-Mechanismus
+	- Verwendung der SQLite Bibliothek
+
+    ZUM TESTEN STEHT AUF SISYPHOS.DCS.FH-HEIDELBERG.DE EIN IRC SERVER BEREIT. TREFFT EUCH DOCH MAL IM CHANNEL #informatik ;-)
