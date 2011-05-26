@@ -3,7 +3,6 @@ import socket
 import string
 from os.path import isfile
 from MAIL import *
-#from DB import *
 from PLUGIN import *
 
 if __name__ == "__main__":
@@ -30,11 +29,13 @@ if __name__ == "__main__":
 	# irc channel
 	
 	## MAIL
+	# FROM
 	# email HOST
 	# email PORT
 	# username
 	# password
 	
+	# plug-in to use for logging
 	DB = use_plugin("SQLITE")
 	
 	## DB
@@ -51,8 +52,6 @@ if __name__ == "__main__":
 	irc.send("USER %s %s bla :%s\r\n" % (IDENT, HOST, REALNAME))
 	irc.send("JOIN #irclib\r\n")
 
-	#s.send("QUIT\r\n")
-
 	while 1:
 		readbuffer=readbuffer + irc.recv(1024)
 		temp=string.split(readbuffer, "\n")
@@ -61,8 +60,6 @@ if __name__ == "__main__":
 		for line in temp:
 			line=string.rstrip(line)
 			line=string.split(line)
-			
-			
 			
 			#keep-alive messages
 			if(line[0]=="PING"):
@@ -75,7 +72,6 @@ if __name__ == "__main__":
 				DB.addEntry(DATABASE, line[1], line[0].split("!")[0][1:], line[2])
 				print line
 
-				
 			#received private message
 			elif ((line[1] == "PRIVMSG") & (line[2] == NICK)):
 				DB.addEntry(DATABASE, line[1], line[0].split("!")[0][1:], " ".join(line[3:]))
@@ -89,7 +85,7 @@ if __name__ == "__main__":
 				# sends the log to the given adresses
 				if (line[3][1:] == "SEND"):
 					for address in line[4:]:
-						#sendEmail(TO=address)
+						#sendEmail(address, DATABASE)
 						irc.send("PRIVMSG %s :Sending log to %s\r\n" % (line[0].split("!")[0][1:], address))
 				
 				#SEEN person person ...

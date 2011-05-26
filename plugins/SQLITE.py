@@ -4,7 +4,6 @@ def createTable(database):
 	con = sqlite3.connect(database, isolation_level=None)
 	cur = con.cursor()
 	cur.execute("create table irc (id INTEGER PRIMARY KEY, time TEXT, sort TEXT, who TEXT, message TEXT)")
-	# datetime('now')
 	con.commit()
 	cur.close()
 	

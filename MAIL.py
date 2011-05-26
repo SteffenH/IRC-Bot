@@ -8,9 +8,8 @@ from email.MIMEBase import MIMEBase
 from email.MIMEMultipart import MIMEMultipart
 from email.Utils import formatdate
  
-filePath = r'D:\\Desktop\\IRC Bot\\README'
- 
-def sendEmail(TO="bla@blub.de",
+def sendEmail(TO,
+			  filePath,
               FROM="blub@bla.de"):
     HOST = "smtp.web.de"
  
