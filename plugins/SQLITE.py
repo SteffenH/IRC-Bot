@@ -20,9 +20,11 @@ def lastSeen(database, person):
 	#seen = 
 	cur.execute("select * from irc where who=? ORDER BY time DESC LIMIT 1" , [person.decode('utf-8')])
 	con.commit()
-	cur.close()
 	
 	seen = cur.fetchall()
+	
+	cur.close()
+	
 	if seen:
 		return seen[0][1]
 	else:
