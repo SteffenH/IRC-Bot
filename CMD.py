@@ -42,6 +42,11 @@ def cmd():
 	parser.add_argument('--msubject', action='store', dest='mail_subject',
 						help='eMail subject',
 						default="IRC Log")
+#PLUGIN
+	parser.add_argument('--plugin', action='store', dest='plugin',
+						help='logging plugin',
+						default="SQLITE")
+	parser.add_argument('--plugin-location', action='store', dest='plugin_location',
+						help='absolute location of logs')
 
-	
 	return parser.parse_args()

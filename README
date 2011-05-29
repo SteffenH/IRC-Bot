@@ -1,0 +1,36 @@
+IRC Bot
+zum Loggen des Chat-Verlaufs.
+
+Plugins
+müssen die Interfaces createTable(database), addEntry(database, order, who, message) und lastSeen(database, person) implementieren und im Unterordner _plugins_ abgelegt werden.
+
+usage: simplebot.py [-h] [-s HOST] [-p PORT] [-n NICK] [-i IDENT]
+                    [-r REAL_NAME] [-c CHANNEL] [--pass PASSWORD] [-D]
+                    [-d DEAMON_STOP] [--mhost MAIL_HOST]
+                    [--maddress MAIL_ADDRESS] [--musername MAIL_USERNAME]
+                    [--mpass MAIL_PASSWORD] [--msubject MAIL_SUBJECT]
+                    [--plugin PLUGIN] [--plugin-location PLUGIN_LOCATION]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -s HOST               IRC server
+  -p PORT               IRC port
+  -n NICK               IRC nick
+  -i IDENT              IRC ident
+  -r REAL_NAME          IRC real name
+  -c CHANNEL            IRC channel
+  --pass PASSWORD       IRC password for closing the bot
+  -D                    Deactivate deamon behaviour
+  -d DEAMON_STOP        Stopping (-d stop) or restarting (-d restart) daemon
+  --mhost MAIL_HOST     eMail host
+  --maddress MAIL_ADDRESS
+                        eMail address
+  --musername MAIL_USERNAME
+                        eMail username
+  --mpass MAIL_PASSWORD
+                        eMail password
+  --msubject MAIL_SUBJECT
+                        eMail subject
+  --plugin PLUGIN       logging plugin
+  --plugin-location PLUGIN_LOCATION
+                        absolute location of logs

@@ -9,22 +9,17 @@ from CMD import cmd
 
 def irc(cmd):
 	#general settings
-	
-	## MAIL
-	# FROM
-	# email HOST
-	# email PORT
-	# username
-	# password
-	
+		
 	# plug-in to use for logging
 	dirname = os.path.dirname(cmd.path)
 	plugin_path = os.path.join(dirname, "plugins")
-	DB = use_plugin("SQLITE", plugin_path)
 	
-	## DB
-	#
+	DB = use_plugin(cmd.plugin, plugin_path)
+	
 	DATABASE = os.path.join(plugin_path, "example.db")
+	if cmd.plugin_location:
+		DATABASE = cmd.plugin_location
+	
 	if not isfile(DATABASE):
 		DB.createTable(DATABASE)
 	
