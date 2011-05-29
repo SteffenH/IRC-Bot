@@ -9,25 +9,6 @@ from CMD import cmd
 
 def irc(cmd):
 	#general settings
-	HOST="irc.freenode.net"
-	PORT=6667
-	NICK="MauBot"
-	IDENT="maubot"
-	REALNAME="MauritsBot"
-	readbuffer=""
-	# password for killing daemon via irc
-	PASSWORD="quit"
-	#options for commandline
-	
-	# DEAMON switch
-	
-	## IRC
-	# server, HOST
-	# PORT
-	# NICK
-	# IDENT
-	# REALNAME
-	# irc channel
 	
 	## MAIL
 	# FROM
@@ -37,23 +18,26 @@ def irc(cmd):
 	# password
 	
 	# plug-in to use for logging
-	plugin_path = "/home/seydanator/Dropbox/IRC Bot Steffen/plugins"
+	dirname = os.path.dirname(cmd.path)
+	plugin_path = os.path.join(dirname, "plugins")
 	DB = use_plugin("SQLITE", plugin_path)
 	
 	## DB
 	#
-	DATABASE = "/home/seydanator/Dropbox/IRC Bot Steffen/example"
+	DATABASE = os.path.join(plugin_path, "example.db")
 	if not isfile(DATABASE):
 		DB.createTable(DATABASE)
 	
 	#connecting to server and sending appropriate orders 
 	#registering the nick and joining a channel
 	irc=socket.socket( socket.AF_INET, socket.SOCK_STREAM )
-	irc.connect((HOST, PORT))
-	irc.send("NICK %s\r\n" % NICK)
-	irc.send("USER %s %s bla :%s\r\n" % (IDENT, HOST, REALNAME))
-	irc.send("JOIN #irclib\r\n")
-
+	irc.connect((cmd.host, cmd.port))
+	irc.send("NICK %s\r\n" % cmd.nick)
+	irc.send("USER %s %s bla :%s\r\n" % (cmd.ident, cmd.host, cmd.real_name))
+	irc.send("JOIN #%s\r\n" % cmd.channel)
+	
+	readbuffer=""
+	
 	while 1:
 		readbuffer=readbuffer + irc.recv(1024)
 		temp=string.split(readbuffer, "\n")
@@ -75,7 +59,7 @@ def irc(cmd):
 				print line
 
 			#received private message
-			elif ((line[1] == "PRIVMSG") & (line[2] == NICK)):
+			elif ((line[1] == "PRIVMSG") & (line[2] == cmd.nick)):
 				DB.addEntry(DATABASE, line[1], line[0].split("!")[0][1:], " ".join(line[3:]))
 				print line
 				
@@ -99,10 +83,11 @@ def irc(cmd):
 			
 				elif (line[3][1:] == "QUIT"):
 					if len(line) > 4:
-						if line[4] == PASSWORD:
-							irc.send("PRIVMSG %s :Bye Bye\r\n" % line[0].split("!")[0][1:])
-							irc.send("QUIT\r\n")
-							exit()
+						if (cmd.password):
+							if line[4] == cmd.password:
+								irc.send("PRIVMSG %s :Bye Bye\r\n" % line[0].split("!")[0][1:])
+								irc.send("QUIT\r\n")
+								exit()
 
 class MyDaemon(Daemon):
 	def run(self, cmd):
@@ -110,6 +95,7 @@ class MyDaemon(Daemon):
 						
 if __name__ == "__main__":
 	commands = cmd()
+	commands.path = os.path.abspath(sys.argv[0])
 	
 	if (commands.deamon):
 		daemon = MyDaemon('/tmp/daemon-example.pid')
