@@ -30,6 +30,18 @@ def cmd():
 						help='Deactivate deamon behaviour')
 	parser.add_argument('-d', action='store', dest='deamon_stop',
 						help='Stopping (-d stop) or restarting (-d restart) daemon')
-						
+#MAIL
+	parser.add_argument('--mhost', action='store', dest='mail_host',
+						help='eMail host')
+	parser.add_argument('--maddress', action='store', dest='mail_address',
+						help='eMail address')
+	parser.add_argument('--musername', action='store', dest='mail_username',
+						help='eMail username')
+	parser.add_argument('--mpass', action='store', dest='mail_password',
+						help='eMail password')
+	parser.add_argument('--msubject', action='store', dest='mail_subject',
+						help='eMail subject',
+						default="IRC Log")
+
 	
 	return parser.parse_args()

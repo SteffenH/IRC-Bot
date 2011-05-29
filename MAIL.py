@@ -10,14 +10,13 @@ from email.Utils import formatdate
  
 def sendEmail(TO,
 			  filePath,
-              FROM="blub@bla.de"):
-    HOST = "smtp.web.de"
- 
+              cmd):
+    
     msg = MIMEMultipart()
-    msg["From"] = FROM
+    msg["From"] = cmd.mail_address
     msg["To"] = TO
-    msg["Subject"] = "You've got mail!"
-    msg['Date']    = formatdate(localtime=True)
+    msg["Subject"] = cmd.mail_subject
+    msg['Date'] = formatdate(localtime=True)
  
     # attach a file
     part = MIMEBase('application', "octet-stream")
@@ -26,14 +25,12 @@ def sendEmail(TO,
     part.add_header('Content-Disposition', 'attachment; filename="%s"' % os.path.basename(filePath))
     msg.attach(part)
  
-    server = smtplib.SMTP(HOST)
-    server.login(USERNAME, PASSWORD)  # optional
+    server = smtplib.SMTP(cmd.mail_host)
+	if (cmd.mail_username & cmd.mail_password):
+		server.login(cmd.mail_username, cmd.mail_password)
  
     try:
         failed = server.sendmail(FROM, TO, msg.as_string())
         server.close()
     except Exception, e:
         errorMsg = "Unable to send email. Error: %s" % str(e)
- 
-if __name__ == "__main__":
-    sendEmail()

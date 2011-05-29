@@ -70,9 +70,10 @@ def irc(cmd):
 				#SEND adress adress ...
 				# sends the log to the given adresses
 				if (line[3][1:] == "SEND"):
-					for address in line[4:]:
-						#sendEmail(address, DATABASE)
-						irc.send("PRIVMSG %s :Sending log to %s\r\n" % (line[0].split("!")[0][1:], address))
+					if (cmd.mail_host & cmd.address):
+						for address in line[4:]:
+							sendEmail(address, DATABASE, cmd)
+							irc.send("PRIVMSG %s :Sending log to %s\r\n" % (line[0].split("!")[0][1:], address))
 				
 				#SEEN person person ...
 				# tells when persons where last seen in chatroom
