@@ -1,0 +1,48 @@
+.\" Process this file with
+.\" groff -man -Tascii foo.1
+.\"
+.TH SIMPLEBOT 1 "MAY 2011" Linux "User Manuals"
+.SH NAME
+simplebot \- IRC bot
+.SH SYNOPSIS
+.B simplebot.py [-s HOST] [-p PORT] ...
+.SH DESCRIPTION
+.B simplebot
+logs messages in an irc chatroom, says when a user was last seen and can send the log file to an email adress
+.SH OPTIONS
+.IP "-h, --help"
+show this help message and exit
+.IP "-s HOST"
+IRC server
+.IP "-p PORT"
+IRC port
+.IP "-n NICK"
+IRC nick
+.IP "-i IDENT"
+IRC ident
+.IP "-r REAL_NAME"
+IRC real name
+.IP "-c CHANNEL"
+IRC channel
+.IP "--pass PASSWORD"
+IRC password for closing the bot
+.IP "-D"
+Deactivate deamon behaviour
+.IP "-d DEAMON_STOP"
+Stopping (-d stop) or restarting (-d restart) daemon
+.IP "--mhost MAIL_HOST"
+eMail host
+.IP "--maddress MAIL_ADDRESS"
+eMail address
+.IP "--musername MAIL_USERNAME"
+eMail username
+.IP "--mpass MAIL_PASSWORD"
+eMail password
+.IP "--msubject MAIL_SUBJECT"
+eMail subject
+.IP "--plugin PLUGIN"
+logging plugin
+.IP "--plugin-location PLUGIN_LOCATION"
+absolute location of logs
+.SH AUTHOR
+Steffen Heimrath <steffenheimrath at gmail dot com>
