@@ -24,11 +24,12 @@ def sendEmail(TO, filePath, cmd):
 	msg.attach(part)
  
 	server = smtplib.SMTP(cmd.mail_host)
-	if (cmd.mail_username & cmd.mail_password):
-		server.login(cmd.mail_username, cmd.mail_password)
+	if cmd.mail_username:
+		if cmd.mail_password:
+			server.login(cmd.mail_username, cmd.mail_password)
 
 	try:
-		failed = server.sendmail(FROM, TO, msg.as_string())
+		failed = server.sendmail(cmd.mail_address, TO, msg.as_string())
 		server.close()
 	except Exception, e:
 		errorMsg = "Unable to send email. Error: %s" % str(e)
